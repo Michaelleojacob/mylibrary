@@ -5,12 +5,29 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>mylibraryapp</title>
+    <link rel="stylesheet" href="./reset.css">
     <link rel="stylesheet" href="./style.css">
 </head>
 <body>
 <!-- <div>hello</div> -->
 <div class="booktitles"></div>
 <div class="whereboxgoes"></div>
+<div class="wherebookinfogoes" aria-placeholder="placeholder"></div>
+<div class="allowUserToMakeNewBook">
+    <form id="newBook">
+        <label for="book">Book's title:</label>
+        <input type="text" autocomplete="off" id="title" name="title">
+        <br>
+        <label for="author">Book's author:</label>
+        <input type="text" autocomplete="off" id="author" name="author">
+        <br>
+        <label for="pages">Amount of pages:</label>
+        <input type="text" autocomplete="off" id="pages" name="pages">
+        <br>
+        <input type="submit" id="submit">
+    </form>
+</div>
+<!-- <button class="submitBook">submit</button> -->
     <!-- <script src="./script.js"></script> -->
     <script src="./fromgroupup.js"></script>
 </body>

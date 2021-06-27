@@ -1,3 +1,13 @@
+form {
+	all: initial;
+	all: unset;
+}
+
+input {
+	outline-width: 0;
+	outline: none;
+}
+
 * {
 	background: black;
 	color: #f2eee5;
@@ -31,4 +41,45 @@
 	/* width: 50px; */
 	border-style: solid;
 	border-color: #f2eee5;
+}
+
+.wherebookinfogoes {
+	display: flex;
+	box-sizing: border-box;
+	height: 20px;
+	width: fit-content;
+	align-content: center;
+	justify-content: center;
+	margin-left: auto;
+	margin-right: auto;
+	/* position: fixed; */
+	margin-top: 20px;
+}
+
+.allowUserToMakeNewBook {
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	margin-top: 20px;
+}
+
+#title {
+	margin: 5px;
+}
+
+#author {
+	margin: 5px;
+}
+#pages {
+	margin: 5px;
+}
+
+#submit {
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 10px;
+	text-transform: lowercase;
 }
