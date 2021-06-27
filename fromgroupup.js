@@ -2,14 +2,11 @@ const booktitles = document.querySelector(".booktitles");
 const whereboxgoes = document.querySelector(".whereboxgoes");
 const wherebookinfogoes = document.querySelector(".wherebookinfogoes");
 const newSubmit = document.querySelector("#submit");
-console.log(newSubmit);
+const btitle = document.querySelector("#title");
+const bauthor = document.querySelector("#author");
+const bpages = document.querySelector("#pages");
+const displayError = document.querySelector(".error");
 let myLibrary = [];
-
-newSubmit.addEventListener("click", (e) => {
-    e.preventDefault();
-    console.log(e);
-})
-
 
 function Book(title, author, pages) {
     this.title = title;
@@ -57,5 +54,36 @@ boxArr.map(x => {
     })
 })
 
+newSubmit.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (btitle.value === ""){return displayError.textContent = "Book's title was empty"}
+    else if (bauthor.value === ""){return displayError.textContent = "Book's author was empty"}
+    else if (bpages.value === ""){return displayError.textContent = "Amount of pages was empty"}
+    else{
+        userTitle = btitle.value;
+        userAuthor = bauthor.value;
+        userPages = bpages.value;
+    }
+    btitle.value = "";
+    bauthor.value = "";
+    bpages.value = "";
 
+    addBookToLibrary(new Book(userTitle, userAuthor, userPages));
+    makeboxes(myLibrary[myLibrary.length - 1].title);
+})
 
+// boxes = document.querySelectorAll(".box");
+// let boxArr = Array.from(boxes);
+// boxArr.map(x => {
+//     x.addEventListener("click", (e) => {
+//         clickedon = e.target.innerText;
+//         for(i=0;i<myLibrary.length;i++){
+//             if (myLibrary[i].title === clickedon){
+//                 const userSelected = myLibrary[i]
+//                 console.log(userSelected);
+//                 wherebookinfogoes.textContent = `"${userSelected.title}" by ${userSelected.author} \n pages: ${userSelected.pages}`;
+//                 return userSelected;
+//             }
+//         }
+//     })
+// })
