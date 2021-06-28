@@ -110,3 +110,8 @@ input {
 	justify-content: center;
 	margin-top: 5px;
 }
+
+.gotdeleted {
+	all: unset;
+	display: none;
+}

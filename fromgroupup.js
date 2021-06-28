@@ -24,6 +24,7 @@ function addBookToLibrary(myObj){
 function makeboxes(string){
     const box = document.createElement("div");
     box.className = "box";
+    box.setAttribute("id", string)
     const boxContent = document.createTextNode(string)
     box.appendChild(boxContent);
     whereboxgoes.appendChild(box);
@@ -67,6 +68,10 @@ document.addEventListener("click", function(e){
                     if(myLibrary.includes(userSelected)){
                         for(let i=0;i<myLibrary.length; i++){
                             const itemToDel = myLibrary.indexOf(userSelected);
+                            bookcard = document.getElementById(userSelected.title);
+                            bookcard.remove();
+                            del.remove();
+                            wherebookinfogoes.textContent = "";
                             return delete myLibrary[itemToDel];
                         }
                     }
