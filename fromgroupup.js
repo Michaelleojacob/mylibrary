@@ -40,19 +40,6 @@ for(i=0;i<myLibrary.length;i++){
 
 boxes = document.querySelectorAll(".box");
 let boxArr = Array.from(boxes);
-boxArr.map(x => {
-    x.addEventListener("click", (e) => {
-        clickedon = e.target.innerText;
-        for(i=0;i<myLibrary.length;i++){
-            if (myLibrary[i].title === clickedon){
-                const userSelected = myLibrary[i]
-                console.log(userSelected);
-                wherebookinfogoes.textContent = `"${userSelected.title}" by ${userSelected.author} \n pages: ${userSelected.pages}`;
-                return userSelected;
-            }
-        }
-    })
-})
 
 newSubmit.addEventListener("click", (e) => {
     e.preventDefault();
@@ -70,20 +57,20 @@ newSubmit.addEventListener("click", (e) => {
 
     addBookToLibrary(new Book(userTitle, userAuthor, userPages));
     makeboxes(myLibrary[myLibrary.length - 1].title);
+    boxArr.push(myLibrary[myLibrary.length - 1]);
+    console.log(boxArr[boxArr.length - 1]);
 })
 
-// boxes = document.querySelectorAll(".box");
-// let boxArr = Array.from(boxes);
-// boxArr.map(x => {
-//     x.addEventListener("click", (e) => {
-//         clickedon = e.target.innerText;
-//         for(i=0;i<myLibrary.length;i++){
-//             if (myLibrary[i].title === clickedon){
-//                 const userSelected = myLibrary[i]
-//                 console.log(userSelected);
-//                 wherebookinfogoes.textContent = `"${userSelected.title}" by ${userSelected.author} \n pages: ${userSelected.pages}`;
-//                 return userSelected;
-//             }
-//         }
-//     })
-// })
+document.addEventListener("click", function(e){
+    if(e.target.className === "box"){
+        clickedon = e.target.innerText;
+        for(let i=0;i<myLibrary.length;i++){
+            if(myLibrary[i].title === clickedon){
+                const userSelected = myLibrary[i]
+                console.log(userSelected);
+                wherebookinfogoes.textContent = `"${userSelected.title}" by ${userSelected.author} \n pages: ${userSelected.pages}`;
+                return userSelected;
+            }
+        }
+    }
+})
