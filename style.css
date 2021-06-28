@@ -17,34 +17,56 @@ input {
 	display: flex;
 	height: 50px;
 	width: 50px;
-	border-style: solid;
+	border-style: groove;
 	border-color: #f2eee5;
+}
+
+.fixingspacing {
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	box-sizing: border-box;
+	height: 100px;
 }
 
 .whereboxgoes {
 	display: flex;
 	align-content: center;
-	/* justify-content: space-evenly; */
 	justify-content: center;
 	text-align: center;
+}
+
+.deleteOption {
+	display: flex;
+	display: block;
+	text-align: center;
+	width: fit-content;
+	height: 20px;
+	margin: 10px auto 10px auto;
+}
+
+.delOrModify {
+	display: flex;
+	align-content: center;
+	justify-content: center;
+	margin: 15px 0px 15px 0px;
+	height: fit-content;
 }
 
 .box {
 	display: flex;
 	text-align: center;
+	box-sizing: border-box;
+	height: fit-content;
 	width: fit-content;
 	margin: 50px 10px 0px 10px;
 	padding: 10px 5px 10px 5px;
-	/* margin: 5px; */
-	/* padding: 25px; */
-	/* height: 50px; */
-	/* width: 50px; */
-	border-style: solid;
-	border-color: #f2eee5;
+	border: 2px solid rgba(219, 216, 216, 0.5);
 }
 
 .wherebookinfogoes {
 	display: flex;
+	display: block;
 	box-sizing: border-box;
 	height: 20px;
 	width: fit-content;
@@ -52,15 +74,13 @@ input {
 	justify-content: center;
 	margin-left: auto;
 	margin-right: auto;
-	/* position: fixed; */
-	margin-top: 20px;
 }
 
 .allowUserToMakeNewBook {
 	display: flex;
 	align-content: center;
 	justify-content: center;
-	margin-top: 20px;
+	margin-top: 7%;
 }
 
 #title {

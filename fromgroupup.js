@@ -6,6 +6,8 @@ const btitle = document.querySelector("#title");
 const bauthor = document.querySelector("#author");
 const bpages = document.querySelector("#pages");
 const displayError = document.querySelector(".error");
+const deleteOption = document.querySelector(".deleteOption");
+const delOrModify = document.querySelector(".delOrModify");
 let myLibrary = [];
 
 function Book(title, author, pages) {
@@ -18,13 +20,6 @@ function addBookToLibrary(myObj){
     myLibrary.push(myObj);
 }
 
-const wildthings = new Book("Where the wild things are", "Maurice Sendak", 40);
-const abc = new Book("abc", "Murica", 26);
-const troll = new Book ("xd", "kekw", 69);
-
-addBookToLibrary(wildthings);
-addBookToLibrary(abc);
-addBookToLibrary(troll);
 
 function makeboxes(string){
     const box = document.createElement("div");
@@ -37,9 +32,6 @@ function makeboxes(string){
 for(i=0;i<myLibrary.length;i++){
     makeboxes(myLibrary[i].title);
 }
-
-boxes = document.querySelectorAll(".box");
-let boxArr = Array.from(boxes);
 
 newSubmit.addEventListener("click", (e) => {
     e.preventDefault();
@@ -57,8 +49,6 @@ newSubmit.addEventListener("click", (e) => {
 
     addBookToLibrary(new Book(userTitle, userAuthor, userPages));
     makeboxes(myLibrary[myLibrary.length - 1].title);
-    boxArr.push(myLibrary[myLibrary.length - 1]);
-    console.log(boxArr[boxArr.length - 1]);
 })
 
 document.addEventListener("click", function(e){
@@ -69,6 +59,18 @@ document.addEventListener("click", function(e){
                 const userSelected = myLibrary[i]
                 console.log(userSelected);
                 wherebookinfogoes.textContent = `"${userSelected.title}" by ${userSelected.author} \n pages: ${userSelected.pages}`;
+                const del = document.createElement("button");
+                del.className = "deleteOption";
+                del.textContent = "Delete this book"
+                wherebookinfogoes.appendChild(del);
+                del.addEventListener("click", function(e){
+                    if(myLibrary.includes(userSelected)){
+                        for(let i=0;i<myLibrary.length; i++){
+                            const itemToDel = myLibrary.indexOf(userSelected);
+                            return delete myLibrary[itemToDel];
+                        }
+                    }
+                })
                 return userSelected;
             }
         }

@@ -1,39 +1,32 @@
 const booktitles = document.querySelector(".booktitles");
 const whereboxgoes = document.querySelector(".whereboxgoes");
+const wherebookinfogoes = document.querySelector(".wherebookinfogoes");
+const newSubmit = document.querySelector("#submit");
+const btitle = document.querySelector("#title");
+const bauthor = document.querySelector("#author");
+const bpages = document.querySelector("#pages");
+const displayError = document.querySelector(".error");
+const deleteOption = document.querySelector(".deleteOption");
+const delOrModify = document.querySelector(".delOrModify");
 let myLibrary = [];
 
-function Book(title, author, pages, haveRead) {
+function Book(title, author, pages) {
     this.title = title;
     this.author = author;
     this.pages = pages;
-    this.haveRead = haveRead;
 }
 
 function addBookToLibrary(myObj){
-    // console.log(myObj);
     myLibrary.push(myObj);
-
 }
 
-const wildthings = new Book("Where the wild things are", "Maurice Sendak", 40, "yes");
-const abc = new Book("abc", "Murica", 26, "yes");
-const troll = new Book ("xd", "kekw", 69, "nice");
-// console.log(wildthings);
+const wildthings = new Book("Where the wild things are", "Maurice Sendak", 40);
+const abc = new Book("abc", "Murica", 26);
+const troll = new Book ("xd", "kekw", 69);
 
-addBookToLibrary(wildthings)
-addBookToLibrary(abc)
-addBookToLibrary(troll)
-// console.log(myLibrary);
-
-function titlesToPage(){
-    titlesOfBooks = [];
-    myLibrary.map(function(x) {
-        titlesOfBooks.push(x.title)
-        return titlesOfBooks
-    })
-}
-titlesToPage()
-console.log(titlesOfBooks);
+addBookToLibrary(wildthings);
+addBookToLibrary(abc);
+addBookToLibrary(troll);
 
 function makeboxes(string){
     const box = document.createElement("div");
@@ -43,25 +36,55 @@ function makeboxes(string){
     whereboxgoes.appendChild(box);
 }
 
-for(i=0;i<titlesOfBooks.length; i++){
-    makeboxes(titlesOfBooks[i])
+for(i=0;i<myLibrary.length;i++){
+    makeboxes(myLibrary[i].title);
 }
 
-const boxes = document.querySelectorAll(".box");
+boxes = document.querySelectorAll(".box");
+let boxArr = Array.from(boxes);
 
-let boxArr = Array.from(boxes)
-console.log(boxArr);
+newSubmit.addEventListener("click", (e) => {
+    e.preventDefault();
+    if (btitle.value === ""){return displayError.textContent = "Book's title was empty"}
+    else if (bauthor.value === ""){return displayError.textContent = "Book's author was empty"}
+    else if (bpages.value === ""){return displayError.textContent = "Amount of pages was empty"}
+    else{
+        userTitle = btitle.value;
+        userAuthor = bauthor.value;
+        userPages = bpages.value;
+    }
+    btitle.value = "";
+    bauthor.value = "";
+    bpages.value = "";
 
-console.log(myLibrary);
-
-boxArr.map(x => {
-    x.addEventListener("click", (e) => {
-        console.log(e);
-        console.log(e.target.innerText);
-        clickedon = e.target.innerText;
-        myLibrary.forEach(element => {
-            element.title.includes(clickedon) ? console.log("true") : console.log("false");
-        })
-    })
+    addBookToLibrary(new Book(userTitle, userAuthor, userPages));
+    makeboxes(myLibrary[myLibrary.length - 1].title);
+    boxArr.push(myLibrary[myLibrary.length - 1]);
+    console.log(boxArr[boxArr.length - 1]);
 })
 
+document.addEventListener("click", function(e){
+    if(e.target.className === "box"){
+        clickedon = e.target.innerText;
+        for(let i=0;i<myLibrary.length;i++){
+            if(myLibrary[i].title === clickedon){
+                const userSelected = myLibrary[i]
+                console.log(userSelected);
+                wherebookinfogoes.textContent = `"${userSelected.title}" by ${userSelected.author} \n pages: ${userSelected.pages}`;
+                const del = document.createElement("button");
+                del.className = "deleteOption";
+                del.textContent = "Delete this book"
+                wherebookinfogoes.appendChild(del);
+                del.addEventListener("click", function(e){
+                    if(myLibrary.includes(userSelected)){
+                        for(let i=0;i<myLibrary.length; i++){
+                            const itemToDel = myLibrary.indexOf(userSelected);
+                            return delete myLibrary[itemToDel];
+                        }
+                    }
+                })
+                return userSelected;
+            }
+        }
+    }
+})

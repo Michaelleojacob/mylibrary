@@ -44,3 +44,25 @@ boxArr.map(x => {
         }
     })
 })
+
+
+document.addEventListener("click", function(e){
+    if(e.target.className === "box"){
+        clickedon = e.target.innerText;
+        for(let i=0;i<myLibrary.length;i++){
+            if(myLibrary[i].title === clickedon){
+                const userSelected = myLibrary[i]
+                console.log(userSelected);
+                wherebookinfogoes.textContent = `"${userSelected.title}" by ${userSelected.author} \n pages: ${userSelected.pages}`;
+                const del = document.createElement("button");
+                del.className = "deleteOption";
+                delOrModify.append(del);
+                del.textContent = "would you like to delete this book?"
+                del.addEventListener("click", function(e){
+                    console.log(e);
+                })
+                return userSelected;
+            }
+        }
+    }
+})
