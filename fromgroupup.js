@@ -55,6 +55,7 @@ newSubmit.addEventListener("click", (e) => {
 document.addEventListener("click", function(e){
     if(e.target.className === "box"){
         clickedon = e.target.innerText;
+        console.log(e);
         for(let i=0;i<myLibrary.length;i++){
             if(myLibrary[i].title === clickedon){
                 const userSelected = myLibrary[i]
@@ -72,7 +73,9 @@ document.addEventListener("click", function(e){
                             bookcard.remove();
                             del.remove();
                             wherebookinfogoes.textContent = "";
-                            return delete myLibrary[itemToDel];
+                            delete myLibrary[itemToDel];
+                            myLibrary = myLibrary.filter(item => item);
+                            return;
                         }
                     }
                 })
