@@ -66,3 +66,49 @@ document.addEventListener("click", function(e){
         }
     }
 })
+
+
+//! local storage testing 
+
+//? for testing
+// function storageAvailable(type) {
+//     var storage;
+//     try {
+//         storage = window[type];
+//         var x = '__storage_test__';
+//         storage.setItem(x, x);
+//         storage.removeItem(x);
+//         return true;
+//     }
+//     catch(e) {
+//         return e instanceof DOMException && (
+//             e.code === 22 ||
+//             e.code === 1014 ||
+//             e.name === 'QuotaExceededError' ||
+//             e.name === 'NS_ERROR_DOM_QUOTA_REACHED') &&
+//             (storage && storage.length !== 0);
+//     }
+// }
+//? for testing
+// if (storageAvailable('localStorage')) {
+//     console.log("we can use localstorage");
+// }
+// else {
+//     console.log("localstorage is not available");
+// }
+
+//? for local storage
+var a = [];
+a.push(JSON.parse(localStorage.getItem(myLibrary)));
+localStorage.setItem(myLibrary, JSON.stringify(a));
+
+function SaveDataToLocalStorage(data){
+    var a = [];
+    i=0;
+    // Parse the serialized data back into an aray of objects
+    a = JSON.parse(localStorage.getItem(myLibrary)) || [];
+    // Push the new data (whether it be an object or anything else) onto the array
+    a.push(data);
+    // Re-serialize the array back into a string and store it in localStorage
+    localStorage.setItem(myLibrary, JSON.stringify(a));
+}

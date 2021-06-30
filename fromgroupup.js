@@ -9,6 +9,18 @@ const displayError = document.querySelector(".error");
 const deleteOption = document.querySelector(".deleteOption");
 const delOrModify = document.querySelector(".delOrModify");
 let myLibrary = [];
+let localStorageIndexCount = localStorage.length;
+
+function doesLocalStorageHaveItems(){
+    console.log("yes");
+    if(localStorage.length !== 0){
+        for(let i=0; i<localStorage.length; i++){
+            myLibrary.push(localStorage[i]);
+        }
+    }
+    console.log(myLibrary);
+}
+doesLocalStorageHaveItems()
 
 function Book(title, author, pages) {
     this.title = title;
@@ -16,22 +28,13 @@ function Book(title, author, pages) {
     this.pages = pages;
 }
 
-function addBookToLibrary(myObj){
-    myLibrary.push(myObj);
-}
-
-
-function makeboxes(string){
+function makeCardforBook(string){
     const box = document.createElement("div");
     box.className = "box";
-    box.setAttribute("id", string)
-    const boxContent = document.createTextNode(string)
+    box.setAttribute("id", string);
+    const boxContent = document.createTextNode(string);
     box.appendChild(boxContent);
     whereboxgoes.appendChild(box);
-}
-
-for(i=0;i<myLibrary.length;i++){
-    makeboxes(myLibrary[i].title);
 }
 
 newSubmit.addEventListener("click", (e) => {
@@ -48,22 +51,21 @@ newSubmit.addEventListener("click", (e) => {
     bauthor.value = "";
     bpages.value = "";
 
-    addBookToLibrary(new Book(userTitle, userAuthor, userPages));
-    makeboxes(myLibrary[myLibrary.length - 1].title);
+    myLibrary.push(new Book(userTitle, userAuthor, userPages));
+    localStorage.setItem(localStorageIndexCount++, `${userTitle}" by ${userAuthor} \n pages: ${userPages}`)
+    makeCardforBook(myLibrary[myLibrary.length - 1].title);
 })
 
 document.addEventListener("click", function(e){
     if(e.target.className === "box"){
         clickedon = e.target.innerText;
-        console.log(e);
         for(let i=0;i<myLibrary.length;i++){
             if(myLibrary[i].title === clickedon){
-                const userSelected = myLibrary[i]
-                console.log(userSelected);
+                const userSelected = myLibrary[i];
                 wherebookinfogoes.textContent = `"${userSelected.title}" by ${userSelected.author} \n pages: ${userSelected.pages}`;
                 const del = document.createElement("button");
                 del.className = "deleteOption";
-                del.textContent = "Delete this book"
+                del.textContent = "Delete this book";
                 wherebookinfogoes.appendChild(del);
                 del.addEventListener("click", function(e){
                     if(myLibrary.includes(userSelected)){
@@ -74,12 +76,12 @@ document.addEventListener("click", function(e){
                             del.remove();
                             wherebookinfogoes.textContent = "";
                             delete myLibrary[itemToDel];
+                            delete localStorage[itemToDel]
                             myLibrary = myLibrary.filter(item => item);
                             return;
                         }
                     }
                 })
-                return userSelected;
             }
         }
     }
