@@ -1,3 +1,10 @@
+str = "hello / come / again"
+console.log(str);
+console.log(str.split("/"));
+console.log(str.split("/"));
+console.log(str.split("/"));
+console.log(str.split("/").split("/"));
+
 function makeboxes(){
     const box = document.createElement("div");
     box.className = "box";
@@ -112,3 +119,103 @@ function SaveDataToLocalStorage(data){
     // Re-serialize the array back into a string and store it in localStorage
     localStorage.setItem(myLibrary, JSON.stringify(a));
 }
+
+document.addEventListener("click", function(e){
+    if(e.target.className === "box"){
+        clickedon = e.target.innerText;
+        for(let i=0;i<myLibrary.length;i++){
+            //logic for items that the user dynamically creates.
+            if((myLibrary[i].title === clickedon) && (undefined !== myLibrary[i].title)){
+                const userSelected = myLibrary[i]
+                wherebookinfogoes.textContent = `"${userSelected.title}" by ${userSelected.author} \n pages: ${userSelected.pages}`;
+                const del = document.createElement("button");
+                del.className = "deleteOption";
+                del.textContent = "Delete this book";
+                wherebookinfogoes.appendChild(del);
+                del.addEventListener("click", function(e){
+                    if(myLibrary.includes(userSelected)){
+                        for(let i=0;i<myLibrary.length; i++){
+                            const itemToDel = myLibrary.indexOf(userSelected);
+                            bookcard = document.getElementById(userSelected.title);
+                            bookcard.remove();
+                            del.remove();
+                            wherebookinfogoes.textContent = "";
+                            delete myLibrary[itemToDel];
+                            delete localStorage[itemToDel]
+                            myLibrary = myLibrary.filter(item => item);
+                            return;
+                        }
+                    }
+                })
+            }
+            //logic for items that were created by localstorage
+            if(myLibrary[i][0] === clickedon){
+                let userSelected = myLibrary[i];
+                wherebookinfogoes.textContent = `"${userSelected[0]}" by ${userSelected[1]} \n pages: ${userSelected[2]}`;const del = document.createElement("button");
+                del.className = "deleteOption";
+                del.textContent = "Delete this book";
+                wherebookinfogoes.appendChild(del);
+                del.addEventListener("click", function(e){
+                    if(myLibrary.includes(userSelected)){
+                        for(let i=0;i<myLibrary.length; i++){
+                            console.log(userSelected);
+                            const itemToDel = myLibrary.indexOf(userSelected);
+                            console.log(itemToDel);
+                            bookcard = document.getElementById(userSelected[0]);
+                            bookcard.remove();
+                            del.remove();
+                            wherebookinfogoes.textContent = "";
+                            delete myLibrary[itemToDel];
+                            delete localStorage[itemToDel]
+                            myLibrary = myLibrary.filter(item => item);
+                            return;
+                        }
+                    }
+                })
+            }
+        }
+    }
+})
+
+
+
+function reanmeLater(){
+    for(let i=0;i<myLibrary.length;i++){
+        extractValues = Object.values(myLibrary[i]);
+        console.log(clickedon);
+        console.log(myLibrary[i]);
+        console.log(clickedon);
+        console.log(extractValues);
+        console.log(extractValues[i][0]);
+        if(extractValues[i][0] === clickedon){
+            const userSelected = myLibrary[i]
+            wherebookinfogoes.textContent = `"${userSelected.title}" by ${userSelected.author} \n pages: ${userSelected.pages}`;
+            const del = document.createElement("button");
+            del.className = "deleteOption";
+            del.textContent = "Delete this book";
+            wherebookinfogoes.appendChild(del);
+            del.addEventListener("click", function(e){
+                if(myLibrary.includes(userSelected)){
+                    for(let i=0;i<myLibrary.length; i++){
+                        const itemToDel = myLibrary.indexOf(userSelected);
+                        bookcard = document.getElementById(userSelected.title);
+                        bookcard.remove();
+                        del.remove();
+                        wherebookinfogoes.textContent = "";
+                        delete myLibrary[itemToDel];
+                        delete localStorage[itemToDel]
+                        myLibrary = myLibrary.filter(item => item);
+                        return;
+                    }
+                }
+            })
+        }
+    }
+}
+
+document.addEventListener("click", function(e){
+    if(e.target.className === "box"){
+        clickedon = e.target.innerText;
+        reanmeLater()
+    }
+})

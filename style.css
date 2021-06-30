@@ -9,8 +9,7 @@ input {
 }
 
 * {
-	background: black;
-	color: #f2eee5;
+	color-scheme: dark;
 }
 
 .titlecards {
@@ -18,7 +17,7 @@ input {
 	height: 50px;
 	width: 50px;
 	border-style: groove;
-	border-color: #f2eee5;
+	/* border-color: #f2eee5; */
 }
 
 .fixingspacing {
