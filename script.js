@@ -9,13 +9,23 @@ const displayError = document.querySelector(".error");
 const deleteOption = document.querySelector(".deleteOption");
 const delOrModify = document.querySelector(".delOrModify");
 let myLibrary = [];
+let arrFromLocal = [];
 let localStorageIndexCount = localStorage.length;
 
+function clearUndefineds(arr){
+    arr = arr.filter(item => item);
+}
+clearUndefineds(arrFromLocal);
+
 function doesLocalStorageHaveItems(){
-    if(localStorage.length > 0){
-        for(let i=0; i<localStorage.length; i++){
-            myLibrary.push(localStorage[i]);
+    for(let item in localStorage){
+        if(!localStorage.hasOwnProperty(item)){
+            continue;
         }
+        arrFromLocal.push(localStorage[item]);
+    }
+    for(let i of arrFromLocal){
+        myLibrary.push(i)
     }
 }
 doesLocalStorageHaveItems()
@@ -53,6 +63,7 @@ newSubmit.addEventListener("click", (e) => {
     bpages.value = "";
 
     myLibrary.push(new Book(userTitle, userAuthor, userPages));
+    arrFromLocal.push(myLibrary[myLibrary.length -1]);
     localStorage.setItem(localStorageIndexCount++, `${userTitle}/${userAuthor}/${userPages}`);
     makeCardforBook(myLibrary[myLibrary.length - 1].title);
 })
@@ -66,7 +77,14 @@ function localToCardPlusSplitEachElement(arr){
         }
     }
 }
-localToCardPlusSplitEachElement(myLibrary)
+localToCardPlusSplitEachElement(myLibrary);
+
+function rePopLocalStorage(arr){
+    localStorage.clear();
+    for(let i=0; i<arr.length; i++){
+        localStorage.setItem(localStorageIndexCount++, `${arr[i].toString()}`);
+    }
+}
 
 function displayBookInfoAndAddDeleteBtn(){
     for(let i=0;i<myLibrary.length;i++){
@@ -84,8 +102,12 @@ function displayBookInfoAndAddDeleteBtn(){
                 del.remove();
                 wherebookinfogoes.textContent = "";
                 delete myLibrary[currentIndex];
-                delete localStorage[currentIndex];
-                return myLibrary = myLibrary.filter(item => item);
+                delete arrFromLocal[currentIndex];
+                localStorage.clear();
+                arrFromLocal = arrFromLocal.filter(item => item);
+                myLibrary = myLibrary.filter(item => item);
+                rePopLocalStorage(arrFromLocal);
+                return;
             })
         }
     }
@@ -94,6 +116,7 @@ function displayBookInfoAndAddDeleteBtn(){
 document.addEventListener("click", function(e){
     if(e.target.className === "box"){
         clickedon = e.target.innerText;
-        displayBookInfoAndAddDeleteBtn()
+        rePopLocalStorage(arrFromLocal);
+        displayBookInfoAndAddDeleteBtn();
     }
 })
